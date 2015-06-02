@@ -1,0 +1,6 @@
+{
+    "name": "gallery1",
+    "description":"a test gallery",
+    "flagship":"_DSC4316.jpg",
+    "ignore" : ["_DSC4307.jpg"]
+}

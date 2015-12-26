@@ -31,15 +31,7 @@
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700' rel='stylesheet' type='text/css'>
     </head>
     <body class="gallery">
-        <h1>
-            <?=$galleryInfo["name"]?>
-            <!-- uncomment this if you want a slideshow icon. It does the same as clicking the first image
-            <?php if ($hasImages) { ?>
-            <a href="<?= $base_url."slideshow".$requested_path ?>/">
-                <img src="<?=$base_url?>slideshow.svg" alt="slideshow">
-            </a>
-            <?php } ?> -->
-        </h1>
+        <h1><?=$galleryInfo["name"]?></h1>
         <p><?=$galleryInfo["description"]?></p>
         <div class="gallery">
             <?php print_divs($pictureDir.$requested_path,$array); //TODO recurse ?>

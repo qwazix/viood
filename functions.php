@@ -154,3 +154,26 @@ function getGalleryInfo($path){
     return json_decode(file_get_contents($path."/gallery.json"),true);
     else return array();
 }
+
+/**
+ * Checks if there are standalone images in the requested path or only other galleries
+ * @param array $gallery_array The path to the gallery
+ * @return bool Whether the gallery has images or not
+ */
+
+function hasImages($gallery_array){
+    foreach ($gallery_array as $item){
+        if (!is_array($item)){
+            return true;
+        }
+    }
+    return false;
+}
+
+function printSlideshowIcon($requested_path){
+    if (hasImages($requested_path)) { ?>
+    <a href="<?= $base_url."slideshow".$requested_path ?>/">
+        <img src="<?=$base_url?>slideshow.svg" alt="slideshow">
+    </a>
+<?php }
+}

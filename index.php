@@ -57,13 +57,6 @@ if ($requested_path_array[0]=="imageviewer"){
     $galleryName = "- ".$galleryInfo["name"];
     $array = recurse_dir($pictureDir."/".$requested_path, $galleries, 1);
     ksort($array);
-	$hasImages = false;
-    //check if there are standalone images in this folder or only other galleries
-    foreach ($array as $item){
-        if (!is_array($item)){
-            $hasImages = true;
-            break;
-        }
-    }
+	$hasImages = hasImages($array);
     include './gallery.php';
 }

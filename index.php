@@ -51,6 +51,17 @@ if ($requested_path_array[0]=="imageviewer"){
 //    echo $requested_path; die;
     include 'slideshow.php';
     
+    //showcase    
+} else if ($requested_path_array[0]=="showcase"){ 
+    $counter = 0;
+    $requested_path = str_replace("/showcase/", "", $requested_path);
+    $path = $pictureDir."/".$requested_path;
+    $array = flatten(recurse_dir($pictureDir."/".$requested_path, $galleries, 100, false, true));
+    shuffle($array);
+    $galleryName = basename($requested_path);
+//    echo $requested_path; die;
+    include 'showcase.php';
+    
 //gallery    
 } else {
     $galleryInfo = getGalleryInfo($pictureDir."/".$requested_path); 

@@ -29,7 +29,7 @@ require_once 'config.php';
  * @return array
  * 
  */
-function recurse_dir($directory, $array, $depth=1) {
+function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_path=false) {
 //    echo $directory,"<br><br>";
     global $pictureDir;
     $dirName = basename($directory);
@@ -47,10 +47,10 @@ function recurse_dir($directory, $array, $depth=1) {
             if ($entry != "." && $entry != ".." && !in_array($entry,$ignore_images)) {
                 if (is_dir($path)) { 
                     $array[$entry] = array();
-                    $array[$entry]["__info__"] = getGalleryInfo($path);
-                    if ($depth!=0) $array[$entry] = recurse_dir($path, $array[$entry], $depth - 1);
-                } else if(is_image($path)){
-                    $array[$entry]= $entry;
+                    if ($include_info) $array[$entry]["__info__"] = getGalleryInfo($path);
+                    if ($depth!=0) $array[$entry] = recurse_dir($path, $array[$entry], $depth - 1, $include_info, $full_path);
+                } else if(is_image($path)){ 
+                    $array[$entry]= $full_path?$path:$entry;
                 }
             }
         }
@@ -157,7 +157,7 @@ function getGalleryInfo($path){
 
 /**
  * Checks if there are standalone images in the requested path or only other galleries
- * @param array $gallery_array The path to the gallery
+ * @param array $gallery_array The gallery
  * @return bool Whether the gallery has images or not
  */
 
@@ -176,4 +176,15 @@ function printSlideshowIcon($requested_path){
         <img src="<?=$base_url?>slideshow.svg" alt="slideshow">
     </a>
 <?php }
+}
+
+/**
+ * Flattens the recursive array into just a list of images. Removes all info nodes
+ * @param array $array The gallery multidimensional array
+ * @return array A monodimentional array
+ */
+function flatten($array){
+    $return = array();
+    array_walk_recursive($array, function($a) use (&$return) { if ($a)$return[] = $a; });
+    return $return;
 }

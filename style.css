@@ -149,4 +149,16 @@ footer{
 footer a{
     color: #00B3FF;
 }
-
+.showcase .one, .showcase .two{
+    height: 100vh;
+    width: 100vw;
+    background-size: contain;
+    background-color: black;
+    background-repeat: no-repeat;
+    background-position: center center;
+    transition: opacity 10s ease-out;
+}
+.showcase .two{
+    opacity: 0;
+    position: absolute;
+}

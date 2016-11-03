@@ -29,7 +29,7 @@ require_once 'config.php';
  * @return array
  * 
  */
-function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_path=false) {
+function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_path=false, $limit=100) {
 //    echo $directory,"<br><br>";
     global $pictureDir;
     $dirName = basename($directory);
@@ -39,8 +39,9 @@ function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_pat
     if (is_array($gallery_info["ignore"])) $ignore_images = $gallery_info["ignore"]; 
     else $ignore_images = array(); 
     if ($handle = opendir($directory)) {
+        $counter = 0;
         //for each entry found inside $directory
-        while (false !== ($entry = readdir($handle))) {
+        while (false !== ($entry = readdir($handle)) && $counter < $limit) {
             $path  = $directory."/".$entry;
             //echo "$pictureDir -- $dirName -- $path -- $entry \n </br>";
             //ignore . and .. , write directories to the array and recurse into them
@@ -53,6 +54,7 @@ function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_pat
                     $array[$entry]= $full_path?$path:$entry;
                 }
             }
+            $counter++;
         }
         closedir($handle);
     } //echo "final"; _print_r($array);

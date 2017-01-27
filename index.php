@@ -23,7 +23,7 @@ require_once './Livethumb.class.php';
 //require_once './averageColor.php';
 
 if (strstr($_SERVER["HTTP_REFERER"],$base_url)===FALSE) $internal = false; else $internal=true;
-$requested_path = str_replace("/viood", "", $_SERVER['REQUEST_URI']);
+$requested_path = str_replace($folder, "", $_SERVER['REQUEST_URI']);
 $requested_path = urldecode($requested_path);
 $requested_path_array = explode("/", $requested_path); 
 

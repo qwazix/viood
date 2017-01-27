@@ -13,9 +13,13 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
+    along with viood.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+// If you run viood in a subfolder of your webserver,
+// configure this here
+
+$folder = "viood/";
 $pictureDir = "photos";
 $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 

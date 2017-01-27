@@ -23,3 +23,9 @@ $folder = "viood/";
 $pictureDir = "photos";
 $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 
+// If you want some common header bar for all your sites you can set the url relative
+// to the root of your vhost here
+
+$navbar = 'nav.php';
+
+// Extra css for this can be added to extra.css. I promise I will not update that file.

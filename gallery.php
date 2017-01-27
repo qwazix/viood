@@ -26,11 +26,13 @@
         <link rel="apple-touch-icon" href="<?=$base_url?>icon.png"/>
         <link rel="shortcut icon" href="<?=$base_url?>icon.png" />
         <link rel="stylesheet" href="<?=$base_url?>style.css">
+        <link rel="stylesheet" href="<?=$base_url?>extra.css">
         <link rel="apple-touch-startup-image" href="startup.png" />
         <script src="<?=$base_url?>general.js" type="text/javascript"></script>
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700' rel='stylesheet' type='text/css'>
     </head>
     <body class="gallery">
+        <?php include '../'.$navbar ?>
         <h1><?=$galleryInfo["name"]?></h1>
         <p><?=$galleryInfo["description"]?></p>
         <div class="gallery">

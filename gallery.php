@@ -32,8 +32,10 @@
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700' rel='stylesheet' type='text/css'>
     </head>
     <body class="gallery">
-        <?php include '../'.$navbar ?>
-        <h1><?=$galleryInfo["name"]?></h1>
+        <header>
+            <?php include '../'.$navbar ?>
+            <h1><?=$galleryInfo["name"]?></h1>
+        </header>
         <p><?=$galleryInfo["description"]?></p>
         <div class="gallery">
             <?php print_divs($pictureDir.$requested_path,$array); //TODO recurse ?>

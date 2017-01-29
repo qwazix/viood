@@ -43,6 +43,7 @@
         <style>
             body{
                 text-align: center;
+                justify-content: center;
             }
               .swipe {
                 overflow: hidden;
@@ -133,55 +134,7 @@
                   var image = document.querySelector('.swipe-wrap>div:nth-child('+(index+1)+') img');
                   return image;
               }
-              
-              function fitToScreen(img){
-                    var w = img.width
-                    var h = img.height
-                    var ww = window.innerWidth
-                    var wh = window.innerHeight
-                    if (w/h>ww/wh) {
-                        img.style.height = "auto";
-    //                    img.style.width = ww+"px";
-                        img.style.width = "100vw";
-//                        img.style.marginTop = (wh-img.height)/2+"px"
-                    } else {
-                        img.style.width = "auto";
-//                        img.style.marginTop = "";
-    //                    img.style.height = wh+"px";
-                        img.style.height = "100vh";
-                    }
-              }
-              
-              function resetSize(img){
-                  img.style.width = "";
-                  img.style.height = "";
-              }
-              
-              var imageCollection = document.querySelectorAll(".swipe-wrap>div>img")
-              
-              for (var i in imageCollection){
-                  if (typeof imageCollection[i] == "object"){
-                      imageCollection[i].addEventListener("load",function(){
-                          if (this.src == this.getAttribute("data-src")) 
-                              resetSize(this);
-                          else
-                              fitToScreen(this);
-                      })
-//                    if (Math.abs(mySwipe.getPos()-i+1)<2)
-//                      fitToScreen(imageCollection[i]);
-//                    else
-//                      resetSize(imageCollection[i]);
-                  }
-              }
-              
-              window.addEventListener("resize",function(){
-                  for (var i in imageCollection){ 
-                      if (imageCollection[i] == imageCollection[i].getAttribute("data-src")) 
-                              resetSize(imageCollection[i]);
-                          else
-                              fitToScreen(imageCollection[i]);
-                  }
-              })
+
         </script>
     </body>
 </html>

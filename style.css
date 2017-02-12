@@ -38,8 +38,8 @@ body>.gallery{
     align-items: stretch;
 }
 body.gallery .gallery a{
-    height: calc(20vw - 7px);
-    width:  calc(20% - 7px);
+    height: calc(25vw - 7px);
+    width:  calc(25% - 7px);
     flex-grow: 0;
     flex-basis: content;
     display: flex;
@@ -55,8 +55,8 @@ body.gallery .gallery img{
 
 @media (max-width: 600px){
     body.gallery .gallery a{
-        height: calc(33vw - 7px);
-        width:  calc(33% - 7px);
+        height: calc(50vw - 7px);
+        width:  calc(50% - 7px);
     }
 }
 

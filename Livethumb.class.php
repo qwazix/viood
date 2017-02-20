@@ -1,4 +1,5 @@
 <?php
+include 'config.php';
 
 class Livethumb{
     
@@ -23,8 +24,11 @@ class Livethumb{
     private $query='';
     
     public function Livethumb($arr){
+        global $pictureDir;
         //// get data from url - availiable parameters
-        if (isset($arr['pathToImages'])) $this->pathToImages = $arr['pathToImages']; 
+        if (isset($arr['pathToImages'])) $this->pathToImages = $arr['pathToImages'];
+        $this->pathToImages = $pictureDir.$this->pathToImages;
+//        echo $this->pathToImages;
         if (isset($arr['cacheFolder'])) $this->cacheFolder= $arr['cacheFolder'];
        
         if (isset($arr['checkCache']) ) $this->checkCache=true;
@@ -45,7 +49,25 @@ class Livethumb{
         if(file_exists($this->pathToImages . $this->fname))
             $info = pathinfo($this->pathToImages . $this->fname);
         else {
+            //TODO return image with the following text
             //echo 'Image not found!->'.$this->pathToImages.$this->fname;
+            
+            // Create a 100*30 image
+            $im = imagecreate($this->thumbWidth, $this->thumbHeight);
+
+            // White background and blue text
+            $bg = imagecolorallocate($im, 0, 0, 0);
+            $textcolor = imagecolorallocate($im, 255, 255, 255);
+
+            // Write the string at the top left
+            imagestring($im, 5, 0, 0, chunk_split('Image not found!->'.$this->pathToImages.$this->fname,$this->thumbWidth/10) , $textcolor);
+
+            // Output the image
+            header('Content-type: image/png');
+
+            imagepng($im);
+            imagedestroy($im);
+            
             return; 
         }
 
@@ -63,6 +85,9 @@ class Livethumb{
         foreach($arr as $k => $str){
             $query.='&'.$k.'='.$str;
         }
+        // create cache dir
+        if (!file_exists($this->cacheFolder)) mkdir ($this->cacheFolder);
+        
         $this->query=$query;
         $this->cachedFile = $this->cacheFolder . $this->imageHash($query) . $this->fname;
         /////////////// END OF SETUP

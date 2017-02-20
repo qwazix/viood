@@ -45,28 +45,32 @@ if ($requested_path_array[0]=="imageviewer"){
         $goToImage = basename($requested_path);
         $requested_path = str_replace($goToImage, "", $requested_path);
     }
-    $path = $pictureDir."/".$requested_path;
-    $array = recurse_dir($pictureDir."/".$requested_path, $galleries, 1);
+    $path = $requested_path;
+    $array = recurse_dir($requested_path, $galleries, 1);
     $galleryName = basename($requested_path);
 //    echo $requested_path; die;
     include 'slideshow.php';
     
-    //showcase    
+//showcase    
 } else if ($requested_path_array[0]=="showcase"){ 
     $counter = 0;
     $requested_path = str_replace("/showcase/", "", $requested_path);
-    $path = $pictureDir."/".$requested_path;
-    $array = flatten(recurse_dir($pictureDir."/".$requested_path, $galleries, 100, false, true));
+    $path = $requested_path;
+    $array = flatten(recurse_dir($requested_path, $galleries, 100, false, true));
     shuffle($array);
     $galleryName = basename($requested_path);
 //    echo $requested_path; die;
     include 'showcase.php';
-    
+//image    
+} else if ($requested_path_array[0]=="image"){ 
+    $requested_path = str_replace("/image/", "", $requested_path);
+    $path = $requested_path;
+    include 'getimage.php';
 //gallery    
 } else {
     $galleryInfo = getGalleryInfo($pictureDir."/".$requested_path); 
     $galleryName = "- ".$galleryInfo["name"];
-    $array = recurse_dir($pictureDir."/".$requested_path, $galleries, 1);
+    $array = recurse_dir($requested_path, $galleries, 1);
     ksort($array);
 	$hasImages = hasImages($array);
     include './gallery.php';

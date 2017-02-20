@@ -30,27 +30,34 @@ require_once 'config.php';
  * 
  */
 function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_path=false) {
-//    echo $directory,"<br><br>";
+  //TODO: if the folder contains neither images, nor folders, don't display
+    // echo $directory,"<br><br>";
     global $pictureDir;
-    $dirName = basename($directory);
-    if (!is_dir($directory)) include '404.php';
+    $relativePath = str_replace("..", "", $directory);
+    // echo $relativePath;
+    $path = $pictureDir.$relativePath;
+    // echo $path;
+    $dirName = basename($path);
+    if (!is_dir($path)) include '404.php';
     $gallery_info = getGalleryInfo($dirName);
     //get images to be ignored from gallery.json
     if (is_array($gallery_info["ignore"])) $ignore_images = $gallery_info["ignore"]; 
     else $ignore_images = array(); 
-    if ($handle = opendir($directory)) {
+    if ($handle = opendir($path)) {
         //for each entry found inside $directory
         while (false !== ($entry = readdir($handle))) {
-            $path  = $directory."/".$entry;
+            $relativePath = $directory."/".$entry;
+            // echo $relativePath."<br>";
+            $path = $pictureDir."/".$relativePath;
             //echo "$pictureDir -- $dirName -- $path -- $entry \n </br>";
             //ignore . and .. , write directories to the array and recurse into them
             if ($entry != "." && $entry != ".." && !in_array($entry,$ignore_images)) {
                 if (is_dir($path)) { 
                     $array[$entry] = array();
                     if ($include_info) $array[$entry]["__info__"] = getGalleryInfo($path);
-                    if ($depth!=0) $array[$entry] = recurse_dir($path, $array[$entry], $depth - 1, $include_info, $full_path);
-                } else if(is_image($path)){ 
-                    $array[$entry]= $full_path?$path:$entry;
+                    if ($depth!=0) $array[$entry] = recurse_dir($relativePath, $array[$entry], $depth - 1, $include_info, $full_path);
+                } else if(is_image($path) && is_supported($path)){ 
+                    $array[$entry]= $full_path?$relativePath:$entry;
                 }
             }
         }
@@ -107,6 +114,17 @@ function mimetype($file){
  */
 function is_image($file){
     return strstr(mimetype($file),"image")!==FALSE;
+}
+
+/**
+ * Checks mime type to see if file is supported
+ * @param string $file the path to file to check if supported
+ * @return type
+ */
+function is_supported($file){
+    return strstr(mimetype($file),"jpeg")!==FALSE || 
+            strstr(mimetype($file),"png")!==FALSE ||
+            strstr(mimetype($file),"gif")!==FALSE;
 }
 
 /**

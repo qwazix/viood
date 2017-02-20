@@ -39,7 +39,7 @@
         </header>
         <p><?=$galleryInfo["description"]?></p>
         <div class="gallery">
-            <?php print_divs($pictureDir.$requested_path,$array); //TODO recurse ?>
+            <?php print_divs($requested_path,$array); //TODO recurse ?>
         </div>
         <?php if ($requested_path != "" && $requested_path != "/") { ?>
             <a class="back" href="<?= $internal?"javascript:history.back()" :$base_url.preg_replace('#/.*/?$#', "", $requested_path)?>">◀</a>

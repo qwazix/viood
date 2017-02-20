@@ -52,7 +52,7 @@ and open the template in the editor.
         </style>
     </head>
     <body class="standalone" > 
-        <img id="main" src="<?php echo $base_url.$image ?>" onclick="<?=$internal?"javascript:history.back()" : "javascript:window.location.href='".$base_url.str_replace("/imageviewer/".$pictureDir,"slideshow/",$requested_path)."'"?>"/>
+        <img id="main" src="<?php echo $base_url.'image'.$image ?>" onclick="<?=$internal?"javascript:history.back()" : "javascript:window.location.href='".$base_url.str_replace("/imageviewer/".$pictureDir,"slideshow/",$requested_path)."'"?>"/>
         <div class="toolbar"><button class="fullscreen" onclick="fs()"><img src="<?=$base_url?>fullscreen.svg" alt="⎚"></button></div>
     </body>
 </html>

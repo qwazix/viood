@@ -42,8 +42,8 @@
         <link rel="stylesheet" href="<?=$base_url?>style.css">
     </head>
     <body class=showcase>
-        <div class=two style="background-image: url('<?=$base_url?>/<?=$array[1]?>')"></div>
-        <div class=one style="background-image: url('<?=$base_url?>/<?=$array[0]?>')"></div>
+        <div class=two style="background-image: url('<?=$base_url?>image/<?=$array[1]?>')"></div>
+        <div class=one style="background-image: url('<?=$base_url?>image/<?=$array[0]?>')"></div>
         <script>
             var all = <?= json_encode($array)?>;
             var current = 1;

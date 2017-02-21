@@ -22,4 +22,4 @@ if (!isset($_GET['debug'])) header("Content-Type: image/jpeg");
 if (isset($path)) $pic = $path; else $pic = $_GET['photo'];
 //make sure we can't get out of the $pictureDir
 $pic = str_replace("..", "", $pic);
-echo file_get_contents($pictureDir.$pic);
+readfile($pictureDir.$pic);

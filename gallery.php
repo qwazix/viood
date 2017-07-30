@@ -21,20 +21,25 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
         <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <link rel="icon" type="image/png" href="<?=$base_url?>favicon.png" />
         <link rel="apple-touch-icon" href="<?=$base_url?>icon.png"/>
         <link rel="shortcut icon" href="<?=$base_url?>icon.png" />
         <link rel="stylesheet" href="<?=$base_url?>style.css">
+        <link rel="stylesheet" href="<?=$base_url?>extra.css">
         <link rel="apple-touch-startup-image" href="startup.png" />
         <script src="<?=$base_url?>general.js" type="text/javascript"></script>
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700' rel='stylesheet' type='text/css'>
     </head>
     <body class="gallery">
-        <h1><?=$galleryInfo["name"]?></h1>
+        <header>
+            <?php include '../'.$navbar ?>
+            <h1><?=$galleryInfo["name"]?></h1>
+        </header>
         <p><?=$galleryInfo["description"]?></p>
         <div class="gallery">
-            <?php print_divs($pictureDir.$requested_path,$array); //TODO recurse ?>
+            <?php print_divs($requested_path,$array); //TODO recurse ?>
         </div>
         <?php if ($requested_path != "" && $requested_path != "/") { ?>
             <a class="back" href="<?= $internal?"javascript:history.back()" :$base_url.preg_replace('#/.*/?$#', "", $requested_path)?>">◀</a>

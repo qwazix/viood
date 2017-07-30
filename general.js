@@ -48,7 +48,7 @@ function fs() {
             document.msExitFullscreen();
         }
     } else {
-        var elem = document.getElementsByTagName("body")[0];
+        var elem = document.getElementsByTagName("html")[0];
         if (elem.requestFullscreen) {
             elem.requestFullscreen();
         } else if (elem.msRequestFullscreen) {
@@ -59,14 +59,14 @@ function fs() {
             elem.webkitRequestFullscreen();
         }
     }
-    window.mySwipe = new Swipe(document.getElementById('slider'), {
-                startSlide: 1,
-                speed: 400,
-                auto: false,
-                continuous: true,
-                disableScroll: true,
-                stopPropagation: true,
-              });
+//    window.mySwipe = new Swipe(document.getElementById('slider'), {
+//                startSlide: 1,
+//                speed: 400,
+//                auto: false,
+//                continuous: true,
+//                disableScroll: true,
+//                stopPropagation: true,
+//              });
 }
 
 

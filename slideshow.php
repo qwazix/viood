@@ -34,6 +34,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="theme-color" content="#000000" />
         <script src="<?=$base_url?>general.js" type="text/javascript"></script>
         <link rel="icon" type="image/png" href="<?=$base_url?>favicon.png" />
         <link rel="apple-touch-icon" href="<?=$base_url?>icon.png"/>
@@ -43,6 +44,7 @@
         <style>
             body{
                 text-align: center;
+                justify-content: center;
             }
               .swipe {
                 overflow: hidden;
@@ -133,55 +135,7 @@
                   var image = document.querySelector('.swipe-wrap>div:nth-child('+(index+1)+') img');
                   return image;
               }
-              
-              function fitToScreen(img){
-                    var w = img.width
-                    var h = img.height
-                    var ww = window.innerWidth
-                    var wh = window.innerHeight
-                    if (w/h>ww/wh) {
-                        img.style.height = "auto";
-    //                    img.style.width = ww+"px";
-                        img.style.width = "100vw";
-//                        img.style.marginTop = (wh-img.height)/2+"px"
-                    } else {
-                        img.style.width = "auto";
-//                        img.style.marginTop = "";
-    //                    img.style.height = wh+"px";
-                        img.style.height = "100vh";
-                    }
-              }
-              
-              function resetSize(img){
-                  img.style.width = "";
-                  img.style.height = "";
-              }
-              
-              var imageCollection = document.querySelectorAll(".swipe-wrap>div>img")
-              
-              for (var i in imageCollection){
-                  if (typeof imageCollection[i] == "object"){
-                      imageCollection[i].addEventListener("load",function(){
-                          if (this.src == this.getAttribute("data-src")) 
-                              resetSize(this);
-                          else
-                              fitToScreen(this);
-                      })
-//                    if (Math.abs(mySwipe.getPos()-i+1)<2)
-//                      fitToScreen(imageCollection[i]);
-//                    else
-//                      resetSize(imageCollection[i]);
-                  }
-              }
-              
-              window.addEventListener("resize",function(){
-                  for (var i in imageCollection){ 
-                      if (imageCollection[i] == imageCollection[i].getAttribute("data-src")) 
-                              resetSize(imageCollection[i]);
-                          else
-                              fitToScreen(imageCollection[i]);
-                  }
-              })
+
         </script>
     </body>
 </html>

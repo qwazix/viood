@@ -11,6 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimal-ui">
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="theme-color" content="#000000" />
         <link rel="icon" type="image/png" href="<?=$base_url?>favicon.png" />
         <link rel="apple-touch-icon" href="<?=$base_url?>icon.png"/>
         <link rel="shortcut icon" href="<?=$base_url?>icon.png" />
@@ -51,7 +52,7 @@ and open the template in the editor.
         </style>
     </head>
     <body class="standalone" > 
-        <img id="main" src="<?php echo $base_url.$image ?>" onclick="<?=$internal?"javascript:history.back()" : "javascript:window.location.href='".$base_url.str_replace("/imageviewer/".$pictureDir,"slideshow/",$requested_path)."'"?>"/>
+        <img id="main" src="<?php echo $base_url.'image'.$image ?>" onclick="<?=$internal?"javascript:history.back()" : "javascript:window.location.href='".$base_url.str_replace("/imageviewer/".$pictureDir,"slideshow/",$requested_path)."'"?>"/>
         <div class="toolbar"><button class="fullscreen" onclick="fs()"><img src="<?=$base_url?>fullscreen.svg" alt="⎚"></button></div>
     </body>
 </html>

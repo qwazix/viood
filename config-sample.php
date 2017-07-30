@@ -16,6 +16,10 @@
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$pictureDir = "photos/0000 more";
+// If you run viood in a subfolder of your webserver,
+// configure this here
+
+$folder = "viood/";
+$pictureDir = "photos";
 $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 

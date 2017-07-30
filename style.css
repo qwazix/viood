@@ -1,13 +1,19 @@
 /*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
-/* 
-    Created on : Sep 10, 2014, 10:19:58 AM
-    Author     : qwazix
-*/
+    This file is part of viood.
 
+    viood is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    viood is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with viood.  If not, see <http://www.gnu.org/licenses/>.
+*/
 
 .standalone{
     
@@ -24,18 +30,40 @@ body{
     flex-direction: column;
 }
 body>.gallery{
+    display: flex;
+
     flex: 1;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    align-items: stretch;
 }
-body.gallery .gallery img{
-    height: 100px;
-    display: inline-block;
+body.gallery .gallery a{
+    height: calc(25vw - 7px);
+    width:  calc(25% - 7px);
+    flex-grow: 0;
+    flex-basis: content;
+    display: flex;
     vertical-align: top;
     margin: 3px;
 }
 
+body.gallery .gallery img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 600px){
+    body.gallery .gallery a{
+        height: calc(50vw - 7px);
+        width:  calc(50% - 7px);
+    }
+}
+
 @media (min-width: 1200px){
-    body.gallery .gallery img{
-        height: 150px;
+    body.gallery .gallery a{
+        height: calc(16.6vw - 7px);
+        width:  calc(16.6% - 7px);
     }
 }
 
@@ -63,10 +91,10 @@ a.gallery{
     color: white;
     text-align: left;
     font-weight: 100;
-    font-size: 14px;
-    width: calc( 100% - 15px );
+    font-size: 18px;
+    width: calc( 100% - 30px );
     height: 100%;
-    padding-left: 15px;
+    padding: 0 15px 0 15px;
     background: rgba(0,0,0,0.4);
     transition: opacity 1s ease-in-out;
 
@@ -83,8 +111,9 @@ a.gallery{
     margin-bottom: 5px;
 }
 .swipe-wrap img {
-    max-width: 100vw;
-    max-height: 100vh;
+    width: 100vw;
+    height:  100vh;
+    object-fit: contain;
     display: inline-block;
     vertical-align: top;
 }

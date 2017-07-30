@@ -24,8 +24,12 @@ require_once './Livethumb.class.php';
 
 if (strstr($_SERVER["HTTP_REFERER"],$base_url)===FALSE) $internal = false; else $internal=true;
 $requested_path = str_replace($folder, "", $_SERVER['REQUEST_URI']);
-$requested_path = urldecode($requested_path);
+$requested_path = rawurldecode($requested_path);
 $requested_path_array = explode("/", $requested_path); 
+//$requested_path = implode("/",array_map("rawurlencode", $requested_path_array));
+//print_r(array_map("rawurlencode", $requested_path_array));
+//echo($requested_path);
+//print_r($requested_path_array);
 
 //remove the first empty entry
 array_shift($requested_path_array);
@@ -45,8 +49,8 @@ if ($requested_path_array[0]=="imageviewer"){
         $goToImage = basename($requested_path);
         $requested_path = str_replace($goToImage, "", $requested_path);
     }
-    $path = $requested_path;
-    $array = recurse_dir($requested_path, $galleries, 1);
+    $path = $pictureDir."/".$requested_path;
+    $array = recurse_dir($requested_path, $galleries, 0);
     $galleryName = basename($requested_path);
 //    echo $requested_path; die;
     include 'slideshow.php';
@@ -68,10 +72,13 @@ if ($requested_path_array[0]=="imageviewer"){
     include 'getimage.php';
 //gallery    
 } else {
+    ob_end_flush();
     $galleryInfo = getGalleryInfo($pictureDir."/".$requested_path); 
     $galleryName = "- ".$galleryInfo["name"];
     $array = recurse_dir($requested_path, $galleries, 1);
     ksort($array);
 	$hasImages = hasImages($array);
     include './gallery.php';
+    ob_implicit_flush(false);
+    ob_start();
 }

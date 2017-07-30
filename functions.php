@@ -29,13 +29,13 @@ require_once 'config.php';
  * @return array
  * 
  */
-function recurse_dir($directory, $array, $depth=1, $include_info=true, $full_path=false, $limit=100) {
+function recurse_dir($directory, $array, $depth=0, $include_info=true, $full_path=false, $limit=20) {
   //TODO: if the folder contains neither images, nor folders, don't display
     // echo $directory,"<br><br>";
     global $pictureDir;
     $relativePath = str_replace("..", "", $directory);
     // echo $relativePath;
-    $path = $pictureDir.$relativePath;
+    $path = $pictureDir."/".$relativePath;
     // echo $path;
     $dirName = basename($path);
     if (!is_dir($path)) include '404.php';
@@ -81,19 +81,24 @@ function print_divs($path, $array) {
     $rel_path = str_replace($pictureDir, "", $path);
     foreach ($array as $name => $item) {
         if ($name == "__info__") continue;
-        if (is_array($item) && count($item)) { 
+        if (is_array($item) && count($item)) { //if it's a sub-gallery
             $info=array_shift($item);
             //check if hidden
             if (!isset($info['hidden']) || $info['hidden']==false){
                 //check json for flagship
-                if (isset($info['flagship']) && file_exists($path . "/" . $name . "/" . $info['flagship']))
-                        $galleryFlagship = $info['flagship']; else $galleryFlagship = reset($item);
-                ?><a class="gallery" href="<?=$name?>/"><!--
+                if (isset($info['flagship']) && file_exists($path . "/" . $name . "/" . $info['flagship'])) 
+                    $galleryFlagship = $path . "/" . $name . "/" . $info['flagship']; 
+                else $galleryFlagship = $path . "/" . $name . "/" . reset($item);
+//                echo $path . "/" . $name . "/";
+                //if flagship still does not exist for any reason use a folder icon
+                if (!file_exists($galleryFlagship)) $galleryFlagship = "folder_images_blue.png";
+                else $galleryFlagship = getThumb($galleryFlagship);
+                ?><a class="gallery" href="<?=  rawurlencode($name) ?>/"><!--
                     --><div class="galleryOverlay"><h3><?php echo $info["name"]; ?></h3><?=$info["description"]?></div>
-                    <img class="gallery" src="<?= getThumb($path . "/" . $name . "/" . $galleryFlagship ) ?>"/></a><?php
-            }
+                    <img class="gallery" src="<?=$galleryFlagship?>"/></a><?php
+            } //else it's just a photo
         } else { //sorry for the mess we must not have any spaces between inline-block items
-            ?><a href="<?=$base_url."slideshow".$rel_path . $item?>"/><img class="picture" src="<?= getThumb($path . $item) ?>"/></a><?php
+            ?><a href="<?=$base_url."slideshow".$rel_path . rawurlencode($item)?>"/><img class="picture" src="<?= getThumb($path . $item) ?>"/></a><?php
         }
     }
 }
@@ -151,7 +156,7 @@ function _print_r($array){
 function getThumb($path){
     global $base_url;
     $lt = new Livethumb(array("thumbWidth"=>200, "thumbHeight"=>200, "fname"=>basename($path), "pathToImages"=>  str_replace(basename($path), "", $path)));
-    return $base_url.$lt->getSrc();
+    return $lt->getSrc($base_url);
 }
 /**
  * Same as getThumb() but returns a bigger image
@@ -172,7 +177,7 @@ function getSlide($path){
 function getGalleryInfo($path){
     if (file_exists($path."/gallery.json"))
     return json_decode(file_get_contents($path."/gallery.json"),true);
-    else return array();
+    else return array(name=>basename($path));
 }
 
 /**

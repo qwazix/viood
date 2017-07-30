@@ -27,7 +27,7 @@ class Livethumb{
         global $pictureDir;
         //// get data from url - availiable parameters
         if (isset($arr['pathToImages'])) $this->pathToImages = $arr['pathToImages'];
-        $this->pathToImages = $pictureDir.$this->pathToImages;
+        $this->pathToImages = $this->pathToImages;
 //        echo $this->pathToImages;
         if (isset($arr['cacheFolder'])) $this->cacheFolder= $arr['cacheFolder'];
        
@@ -46,32 +46,9 @@ class Livethumb{
         if (isset($arr['returnSrc'])) $this->returnSrc=true;
         
 
-        if(file_exists($this->pathToImages . $this->fname))
+        if(file_exists($this->pathToImages . $this->fname)){
             $info = pathinfo($this->pathToImages . $this->fname);
-        else {
-            //TODO return image with the following text
-            //echo 'Image not found!->'.$this->pathToImages.$this->fname;
-            
-            // Create a 100*30 image
-            $im = imagecreate($this->thumbWidth, $this->thumbHeight);
-
-            // White background and blue text
-            $bg = imagecolorallocate($im, 0, 0, 0);
-            $textcolor = imagecolorallocate($im, 255, 255, 255);
-
-            // Write the string at the top left
-            imagestring($im, 5, 0, 0, chunk_split('Image not found!->'.$this->pathToImages.$this->fname,$this->thumbWidth/10) , $textcolor);
-
-            // Output the image
-            header('Content-type: image/png');
-
-            imagepng($im);
-            imagedestroy($im);
-            
-            return; 
-        }
-        
-        if(!file_exists($this->cacheFolder)) mkdir($this->cacheFolder);
+        } else return;
 
         //// check the type of the file   -----   we are supporting png and jpg
         if(strtolower($info['extension']) == 'jpg' || strtolower($info['extension']) == 'jpeg' ){ 
@@ -85,7 +62,7 @@ class Livethumb{
         
         $query = ''; //to find the image on cache
         foreach($arr as $k => $str){
-            $query.='&'.$k.'='.$str;
+            $query.='&'.$k.'='.rawurlencode($str);
         }
         // create cache dir
         if (!file_exists($this->cacheFolder)) mkdir ($this->cacheFolder);
@@ -95,11 +72,38 @@ class Livethumb{
         /////////////// END OF SETUP
     }
     
-    public function getSrc(){
+    public function getSrc($prefix=""){
+        if(!file_exists($this->pathToImages . $this->fname)){
+            //TODO return image with the following text
+            //echo 'Image not found!->'.$this->pathToImages.$this->fname;
+            
+            // Create a 100*30 image
+            $im = imagecreate($this->thumbWidth, $this->thumbHeight);
+
+            // White background and blue text
+            $bg = imagecolorallocate($im, 0, 0, 0);
+            $textcolor = imagecolorallocate($im, 255, 255, 255);
+
+            // Write the string at the top left
+            $string = 'Image not found!->'.$this->pathToImages.$this->fname;
+                
+            $i=0;
+            $increment=20;
+            while ($i < strlen($string)){
+                imagestring($im, 5, 0, 20*$count, substr($string,$i,20) , $textcolor);
+                $count++;
+                $i+=$increment;
+            }
+            // Output the image
+//            header('Content-type: image/png');
+//            imagepng($im);
+            return $this->toBase64($im); 
+        }
+        
         if($this->checkCache && $this->imageInCache() ){ //
-            return $this->cachedFile;
+            return $prefix.$this->cachedFile;
         }else{
-            return 'livethumb.php?'.$this->query;
+            return $prefix.'livethumb.php?'.$this->query;
         }
     }
 
@@ -351,6 +355,27 @@ class Livethumb{
                 imagepng($file);
             }
         }
+    }
+    private function toBase64( $gdImg, $format='jpeg' ) {
+        ob_start();
+
+        if( $format == 'jpeg'){
+            imagejpeg( $gdImg );
+        }
+        else
+        if( $format == 'png' ){
+            imagepng( $gdImg );
+        }
+        else
+        if( $format == 'gif' )
+        {
+            imagegif( $gdImg );
+        }
+
+        $image_data = ob_get_contents();
+        ob_end_clean();
+
+        return "data:image/$format;base64," . base64_encode( $image_data );
     }
 }
 ?>

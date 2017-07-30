@@ -48,6 +48,8 @@ class Livethumb{
             //echo 'Image not found!->'.$this->pathToImages.$this->fname;
             return; 
         }
+        
+        if(!file_exists($this->cacheFolder)) mkdir($this->cacheFolder);
 
         //// check the type of the file   -----   we are supporting png and jpg
         if(strtolower($info['extension']) == 'jpg' || strtolower($info['extension']) == 'jpeg' ){ 

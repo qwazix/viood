@@ -16,6 +16,6 @@
     along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-$pictureDir = "photos";
+$pictureDir = "photos/0000 more";
 $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 

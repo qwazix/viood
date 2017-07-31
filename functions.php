@@ -88,16 +88,16 @@ function print_divs($path, $array) {
                 //check json for flagship
                 if (isset($info['flagship']) && file_exists($path . "/" . $name . "/" . $info['flagship'])) 
                     $galleryFlagship = $path . "/" . $name . "/" . $info['flagship']; 
-                else if (!empty(reset($item))) 
+                else if (is_string(reset($item))) 
                 //in this case there's no flagship in the info file so we just take the first image from the contents
                     $galleryFlagship = $path . "/" . $name . "/" . reset($item);
                 //if recursion has stopped here try to find an image now
-                else if ($handle = opendir($path . "/" . $name)) while (false !== ($entry = readdir($handle)) && is_supported($entry) ) {
+                else if ($handle = opendir($path . "/" . $name)) while (false !== ($entry = readdir($handle))  ) {
                     $galleryFlagship = $path . "/" . $name . "/" . $entry;
+                    if (is_supported($galleryFlagship)) break;
                 }
-                    
                 //if flagship still does not exist for any reason use a folder icon
-                if (!file_exists($galleryFlagship)) $galleryFlagship = "folder_images_blue.png";
+                if (!(file_exists($galleryFlagship) && is_supported($galleryFlagship))) $galleryFlagship = "folder_images_blue.png";
                 else $galleryFlagship = getThumb($galleryFlagship);
                 ?><a class="gallery" href="<?=  rawurlencode($name) ?>/"><!--
                     --><div class="galleryOverlay"><h3><?php echo $info["name"]; ?></h3><?=$info["description"]?></div>

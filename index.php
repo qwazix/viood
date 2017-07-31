@@ -75,7 +75,7 @@ if ($requested_path_array[0]=="imageviewer"){
     ob_end_flush();
     $galleryInfo = getGalleryInfo($pictureDir."/".$requested_path); 
     $galleryName = "- ".$galleryInfo["name"];
-    $array = recurse_dir($requested_path, $galleries, 1);
+    $array = recurse_dir($requested_path, $galleries, 0);
     ksort($array);
 	$hasImages = hasImages($array);
     include './gallery.php';

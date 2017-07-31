@@ -29,7 +29,7 @@ require_once 'config.php';
  * @return array
  * 
  */
-function recurse_dir($directory, $array, $depth=0, $include_info=true, $full_path=false, $limit=20) {
+function recurse_dir($directory, $array, $depth=0, $include_info=true, $full_path=false, $limit=2000) {
   //TODO: if the folder contains neither images, nor folders, don't display
     // echo $directory,"<br><br>";
     global $pictureDir;
@@ -88,8 +88,14 @@ function print_divs($path, $array) {
                 //check json for flagship
                 if (isset($info['flagship']) && file_exists($path . "/" . $name . "/" . $info['flagship'])) 
                     $galleryFlagship = $path . "/" . $name . "/" . $info['flagship']; 
-                else $galleryFlagship = $path . "/" . $name . "/" . reset($item);
-//                echo $path . "/" . $name . "/";
+                else if (!empty(reset($item))) 
+                //in this case there's no flagship in the info file so we just take the first image from the contents
+                    $galleryFlagship = $path . "/" . $name . "/" . reset($item);
+                //if recursion has stopped here try to find an image now
+                else if ($handle = opendir($path . "/" . $name)) while (false !== ($entry = readdir($handle)) && is_supported($entry) ) {
+                    $galleryFlagship = $path . "/" . $name . "/" . $entry;
+                }
+                    
                 //if flagship still does not exist for any reason use a folder icon
                 if (!file_exists($galleryFlagship)) $galleryFlagship = "folder_images_blue.png";
                 else $galleryFlagship = getThumb($galleryFlagship);
@@ -130,8 +136,8 @@ function is_image($file){
  */
 function is_supported($file){
     return strstr(mimetype($file),"jpeg")!==FALSE || 
-            strstr(mimetype($file),"png")!==FALSE ||
-            strstr(mimetype($file),"gif")!==FALSE;
+            strstr(mimetype($file),"png")!==FALSE; //||
+//            strstr(mimetype($file),"gif")!==FALSE;
 }
 
 /**

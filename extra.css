@@ -21,10 +21,6 @@ header h1 a{
 header h1 a:visited{
     color: #900;
 }
-nav li img {
-    filter: invert(100%) grayscale(100%);
-}
-
 @media all and (max-width:416px) {
     nav ul li.text a{
         width: calc(33vw - 30px) !important;

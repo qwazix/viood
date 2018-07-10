@@ -20,7 +20,7 @@
 // configure this here
 
 $folder = "viood/";
-$pictureDir = "photos";
+$pictureDir = "photos-sample/"; //don't forget the trailing slash
 $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 
 // If you want some common header bar for all your sites you can set the url relative

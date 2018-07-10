@@ -10,7 +10,10 @@ header("HTTP/1.0 404 Not Found");
 
 ?>
 
-This page does not exist
+
+
+The page <pre><?= $path;?></pre> does not exist
+
 
 
 <?php

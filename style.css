@@ -41,7 +41,6 @@ body.gallery .gallery a{
     height: calc(25vw - 7px);
     width:  calc(25% - 7px);
     flex-grow: 0;
-    flex-basis: content;
     display: flex;
     vertical-align: top;
     margin: 3px;

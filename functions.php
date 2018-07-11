@@ -84,9 +84,10 @@ function print_divs($path, $array) {
             //check if hidden
             if (!isset($info['hidden']) || $info['hidden']==false){
                 //check json for flagship
-                if (isset($info['flagship']) && file_exists($path . "/" . $name . "/" . $info['flagship']))
+                if (isset($info['flagship']) && file_exists($pictureDir . "/" .$path . "/" . $name . "/" . $info['flagship']))
                         $galleryFlagship = $info['flagship']; else $galleryFlagship = reset($item);
-                ?><a class="gallery" href="<?=$name?>/"><!--
+                ?><a class="gallery" href="<?=$name?>/"><!-- 
+                    flagship=<?= $info['flagship']; ?> resetitem= <?= reset($item); ?>
                     --><div class="galleryOverlay"><h3><?php echo $info["name"]; ?></h3><?=$info["description"]?></div>
                     <img class="gallery" src="<?= getThumb($path . "/" . $name . "/" . $galleryFlagship ) ?>"/></a><?php
             }

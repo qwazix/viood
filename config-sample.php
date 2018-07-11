@@ -25,6 +25,8 @@ $base_url = "http://".$_SERVER["HTTP_HOST"]."/viood/";
 
 $square = true; //square or rectangle photo thumbnails?
 
+$title = "viood - qwazix's photo gallery";
+
 // If you want some common header bar for all your sites you can set the url relative
 // to the root of your vhost here
 

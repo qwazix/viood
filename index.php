@@ -69,7 +69,7 @@ if ($requested_path_array[0]=="imageviewer"){
 //gallery    
 } else {
     $galleryInfo = getGalleryInfo($pictureDir."/".$requested_path); 
-    $galleryName = "- ".$galleryInfo["name"];
+    if ($galleryInfo["name"]!="") $galleryName = "- ".$galleryInfo["name"];
     $array = recurse_dir($requested_path, $galleries, 1);
     ksort($array);
 	$hasImages = hasImages($array);
@@ -80,3 +80,4 @@ if ($requested_path_array[0]=="imageviewer"){
 //styling
 
 if ($square) $rect = ""; else $rect = "rect"; //Add a class to body if we want rectangular photos
+if (!isset($title)) $title = "viood - qwazix's photo gallery";

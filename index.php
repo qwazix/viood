@@ -75,3 +75,8 @@ if ($requested_path_array[0]=="imageviewer"){
 	$hasImages = hasImages($array);
     include './gallery.php';
 }
+
+
+//styling
+
+if ($square) $rect = ""; else $rect = "rect"; //Add a class to body if we want rectangular photos

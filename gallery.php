@@ -32,7 +32,7 @@
         <script src="<?=$base_url?>general.js" type="text/javascript"></script>
         <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,700' rel='stylesheet' type='text/css'>
     </head>
-    <body class="gallery">
+    <body class="gallery <?=$rect?>">
         <header>
             <?php include '../'.$navbar ?>
             <h1><?=$galleryInfo["name"]?></h1>

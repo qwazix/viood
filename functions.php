@@ -148,7 +148,7 @@ function _print_r($array){
  */
 function getThumb($path){
     global $base_url;
-    $lt = new Livethumb(array("thumbWidth"=>200, "thumbHeight"=>200, "fname"=>basename($path), "pathToImages"=>  str_replace(basename($path), "", $path)));
+    $lt = new Livethumb(array("thumbWidth"=>400, "thumbHeight"=>400, "fname"=>basename($path), "pathToImages"=>  str_replace(basename($path), "", $path)));
     return $base_url.$lt->getSrc();
 }
 /**
